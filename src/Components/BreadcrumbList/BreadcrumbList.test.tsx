@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import BreadcrumbList from '.';
 import { BREADCRUMBS } from '../../mocks/data';
+import BreadcrumbList from './BreadcrumbList';
 
 describe('BreadcrumbList', () => {
   test('renders breadcrumb list', () => {
