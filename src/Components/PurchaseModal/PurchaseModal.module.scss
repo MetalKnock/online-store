@@ -1,12 +1,6 @@
 @import '../../scss/colors.scss';
 
 .modal {
-  &__container {
-  }
-
-  &__form {
-  }
-
   &__background {
     position: fixed;
     left: 0;
@@ -34,12 +28,6 @@
   -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
   box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-
-  &__personalDetails {
-  }
-
-  &__cardDetails {
-  }
 
   &__submit {
     font-weight: 500;
@@ -79,9 +67,6 @@
     background: $bgColorCard;
   }
 
-  &__cardNumber {
-  }
-
   &__expiryDate {
     width: 70%;
   }
@@ -115,9 +100,6 @@
     font-size: 48px;
     font-weight: 500;
     text-align: center;
-  }
-
-  &__loader {
   }
 }
 
