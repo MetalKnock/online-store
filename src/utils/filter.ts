@@ -1,7 +1,7 @@
 import { SortOptionValues, QUERY_PARAM_DELIMITER } from '../const/const';
 import { FilterData, Item, Items } from '../types/data';
 
-export const getSortedItems = (sortValue: SortOptionValues, items: Items) => {
+const getSortedItems = (sortValue: SortOptionValues, items: Items) => {
   switch (sortValue) {
     case SortOptionValues.priceASC:
       return items.sort((a, b) => a.price - b.price);
@@ -16,7 +16,7 @@ export const getSortedItems = (sortValue: SortOptionValues, items: Items) => {
   }
 };
 
-export const findItems = (items: Items, searchValue: string) => {
+const findItems = (items: Items, searchValue: string) => {
   if (searchValue === '') return items;
 
   return items.filter(
@@ -31,7 +31,7 @@ export const findItems = (items: Items, searchValue: string) => {
   );
 };
 
-export const filterItemsBySelectList = (
+const filterItemsBySelectList = (
   items: Items,
   filterString: string,
   filterType: 'category' | 'brand',
@@ -41,7 +41,7 @@ export const filterItemsBySelectList = (
   return items.filter((item) => activeNames.some((it) => it === item[filterType].toLowerCase()));
 };
 
-export const getSelectListData = (
+const getSelectListData = (
   items: Items,
   filteredItems: Items,
   allSelectListData: string[],
@@ -59,13 +59,13 @@ export const getSelectListData = (
   }));
 };
 
-export const getDualSliderMinIndex = (allSliderData: number[], queryString: string) => {
+const getDualSliderMinIndex = (allSliderData: number[], queryString: string) => {
   const value = queryString.split(QUERY_PARAM_DELIMITER)[0];
   if (Number.isNaN(value)) return 0;
   return allSliderData.findIndex((it) => it >= +value);
 };
 
-export const getDualSliderMaxIndex = (allSliderData: number[], queryString: string) => {
+const getDualSliderMaxIndex = (allSliderData: number[], queryString: string) => {
   const value = +queryString.split(QUERY_PARAM_DELIMITER)[1];
   if (Number.isNaN(value)) return allSliderData.length > 0 ? allSliderData.length - 1 : 0;
   const dataValue = [...allSliderData].reverse().find((it) => it <= value);
@@ -73,7 +73,7 @@ export const getDualSliderMaxIndex = (allSliderData: number[], queryString: stri
   return allSliderData.findIndex((it) => it === dataValue);
 };
 
-export const getDualSliderData = (allSliderData: number[], queryString: string) => {
+const getDualSliderData = (allSliderData: number[], queryString: string) => {
   const minValue = getDualSliderMinIndex(allSliderData, queryString);
   const maxValue = getDualSliderMaxIndex(allSliderData, queryString);
 
@@ -89,7 +89,7 @@ export const getDualSliderData = (allSliderData: number[], queryString: string) 
   };
 };
 
-export const getDualSliderDataAfterFiltering = (
+const getDualSliderDataAfterFiltering = (
   allSliderData: number[],
   filteredItems: Items,
   filterType: 'price' | 'stock',
@@ -125,7 +125,7 @@ export const getDualSliderDataAfterFiltering = (
   };
 };
 
-export const filterItemsByDualSlider = (
+const filterItemsByDualSlider = (
   items: Items,
   allSliderData: number[],
   queryString: string,
@@ -139,7 +139,7 @@ export const filterItemsByDualSlider = (
   );
 };
 
-export const filterItems = ({
+const filterItems = ({
   items,
   categoryValues,
   brandValues,
@@ -185,4 +185,15 @@ export const filterItems = ({
   );
 
   return findItems(itemsFilteredByStock, searchValue);
+};
+
+export {
+  getSortedItems,
+  findItems,
+  filterItemsBySelectList,
+  getSelectListData,
+  getDualSliderData,
+  getDualSliderDataAfterFiltering,
+  filterItemsByDualSlider,
+  filterItems,
 };

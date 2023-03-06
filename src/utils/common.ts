@@ -1,9 +1,9 @@
 import { IImagesWithSize } from '../types/imageSlider';
 
-export const getPriceWithoutDiscount = (price: number, discount: number): number =>
+const getPriceWithoutDiscount = (price: number, discount: number): number =>
   Math.ceil((price * 100) / (100 - discount));
 
-export const debounce = (fn: (value: string) => void, delay: number) => {
+const debounce = (fn: (value: string) => void, delay: number) => {
   let timer: ReturnType<typeof setTimeout>;
 
   return (value: string) => {
@@ -12,14 +12,22 @@ export const debounce = (fn: (value: string) => void, delay: number) => {
   };
 };
 
-export const getSearchParams = () =>
-  Object.fromEntries(new URLSearchParams(window.location.search));
+const getSearchParams = () => Object.fromEntries(new URLSearchParams(window.location.search));
 
-export const getLastNDigits = (val: number, n: number) => Number(String(val).slice(-n));
+const getLastNDigits = (val: number, n: number) => Number(String(val).slice(-n));
 
-export const getNumberFirstNChars = (str: string, n: number) => Number(str.slice(0, n));
+const getNumberFirstNChars = (str: string, n: number) => Number(str.slice(0, n));
 
-export const getImagesWithoutDuplicate = (imagesWithSize: IImagesWithSize[]) =>
+const getImagesWithoutDuplicate = (imagesWithSize: IImagesWithSize[]) =>
   imagesWithSize.filter(
     (imageWithSize, i) => i === imagesWithSize.findIndex((val) => val.size === imageWithSize.size),
   );
+
+export {
+  getPriceWithoutDiscount,
+  debounce,
+  getSearchParams,
+  getLastNDigits,
+  getNumberFirstNChars,
+  getImagesWithoutDuplicate,
+};
