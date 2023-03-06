@@ -70,7 +70,7 @@ export default function Pagination({
   }, [currentPage, currentCartItems]);
 
   useEffect(() => {
-    if (Array.from(searchParams).length === 0) {
+    if ([...searchParams].length === 0) {
       setCurrentPage(1);
       setCartItemsPerPage('10');
     }
