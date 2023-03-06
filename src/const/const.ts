@@ -54,6 +54,16 @@ enum QueryParams {
   stock = 'stock',
 }
 
+enum SliderType {
+  price = 'price',
+  stock = 'stock',
+}
+
+enum FilterType {
+  category = 'category',
+  brand = 'brand',
+}
+
 const ListPromoCodes: PromoCodes[] = [
   { name: 'RS', discount: 0.1, fullName: 'Rolling Scopes School' },
   { name: 'EPM', discount: 0.15, fullName: 'EPAM Systems' },
@@ -85,6 +95,8 @@ export {
   ValidationKeys,
   PaymentSystems,
   QueryParams,
+  SliderType,
+  FilterType,
   ListPromoCodes,
   validationErrors,
   API_URL,
