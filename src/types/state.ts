@@ -1,15 +1,15 @@
-import { Items, CartItems, Promocodes } from './data';
+import { Items, CartItems, PromoCodes } from './data';
 
-export type CartState = {
+type CartState = {
   cartItemQuantity: number;
   totalPrice: number;
   cartItems: CartItems;
-  promocodes: Array<Promocodes>;
+  promoCodes: Array<PromoCodes>;
   totalDiscount: number;
   discountedTotalPrice: number;
 };
 
-export type ItemState = {
+type ItemState = {
   items: Items;
   categories: string[];
   brands: string[];
@@ -19,12 +19,14 @@ export type ItemState = {
   error: string;
 };
 
-export type ModalState = {
+type ModalState = {
   isOpen: boolean;
 };
 
-export type FilterState = {
+type FilterState = {
   id: string;
   name: string;
   isActive: boolean;
 }[];
+
+export type { CartState, ItemState, ModalState, FilterState };

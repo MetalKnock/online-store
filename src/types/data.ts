@@ -1,4 +1,4 @@
-export interface Item {
+interface Item {
   id: number;
   title: string;
   description: string;
@@ -12,22 +12,22 @@ export interface Item {
   images: Array<string>;
 }
 
-export type CartItem = Item & {
+type CartItem = Item & {
   quantity: number;
 };
 
-export type Items = Item[];
+type Items = Item[];
 
-export type CartItems = CartItem[];
+type CartItems = CartItem[];
 
-export interface ResponseData {
+interface ResponseData {
   limit: number;
   products: Items;
   skip: number;
   total: number;
 }
 
-export type FilterData = {
+type FilterData = {
   allItems: number;
   availableItems: number;
   id: string;
@@ -35,7 +35,7 @@ export type FilterData = {
   isActive: boolean;
 }[];
 
-export type StateDualSliderData = {
+type StateDualSliderData = {
   minValue: number;
   maxValue: number;
   minDataValue: number;
@@ -43,12 +43,24 @@ export type StateDualSliderData = {
   max: number;
 };
 
-export type DualSliderData = StateDualSliderData & {
+type DualSliderData = StateDualSliderData & {
   onInput: (minValue: number, maxValue: number) => void;
 };
 
-export interface Promocodes {
+interface PromoCodes {
   name: string;
   discount: number;
   fullName: string;
 }
+
+export type {
+  Item,
+  CartItem,
+  Items,
+  CartItems,
+  ResponseData,
+  FilterData,
+  StateDualSliderData,
+  DualSliderData,
+  PromoCodes,
+};
