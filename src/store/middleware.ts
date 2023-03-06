@@ -1,12 +1,12 @@
 import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
-import { keyLocalStorage } from '../const/const';
+import { KEY_LOCALE_STORAGE } from '../const/const';
 import {
   addCartItem,
   removeCartItem,
   dropCartItem,
   clearCart,
-  addPromocode,
-  removePromocode,
+  addPromoCode,
+  removePromoCode,
 } from './reducers/cartState';
 import type { RootState } from './rootReducer';
 
@@ -18,12 +18,12 @@ listenerMiddleware.startListening({
     removeCartItem,
     dropCartItem,
     clearCart,
-    addPromocode,
-    removePromocode,
+    addPromoCode,
+    removePromoCode,
   ),
   effect: (_, listenerApi) =>
     localStorage.setItem(
-      keyLocalStorage,
+      KEY_LOCALE_STORAGE,
       JSON.stringify((listenerApi.getState() as RootState).CART),
     ),
 });
