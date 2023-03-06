@@ -8,7 +8,7 @@ export const getBrands = (items: Items) => [
 ];
 
 export const getPrices = (items: Items) =>
-  [...new Set(items.map((it) => it.price))].sort((a, b) => a - b);
+  [...new Set(items.map((item) => item.price))].sort((a, b) => a - b);
 
 export const getStocks = (items: Items) =>
-  [...new Set(items.map((it) => it.stock))].sort((a, b) => a - b);
+  [...new Set(items.map((item) => item.stock))].sort((a, b) => a - b);
