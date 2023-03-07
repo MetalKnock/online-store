@@ -2,9 +2,10 @@ import React from 'react';
 
 interface CloseProps {
   className: string;
+  handleClick?: () => void;
 }
 
-function Close({ className }: CloseProps) {
+function Close({ className, handleClick }: CloseProps) {
   return (
     <svg
       className={className}
@@ -13,6 +14,7 @@ function Close({ className }: CloseProps) {
       height="800"
       fill="none"
       viewBox="0 0 24 24"
+      onClick={handleClick}
     >
       <path
         stroke="#000"
@@ -24,5 +26,9 @@ function Close({ className }: CloseProps) {
     </svg>
   );
 }
+
+Close.defaultProps = {
+  handleClick: undefined,
+};
 
 export default Close;
