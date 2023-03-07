@@ -1,6 +1,7 @@
 import React from 'react';
 import { DualSliderData, FilterData } from '../../types/data';
 import Filters from '../Filters';
+import Close from '../Loader/close';
 import styles from './BurgerMenu.module.scss';
 
 type BurgerMenuProps = {
@@ -33,6 +34,7 @@ export default function BurgerMenu({
   return (
     <>
       <div className={`${styles.burgerMenu} ${isOpenBurgerMenu ? styles.burgerMenu_open : ''}`}>
+        <Close className={styles.burgerMenu__close} handleClick={handleClick} />
         <Filters
           categoryState={categoryState}
           onCategoryFilterChange={onCategoryFilterChange}
