@@ -1,0 +1,33 @@
+@import '../../scss/colors.scss';
+
+.burgerMenu {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  max-width: 100%;
+  padding: 50px 10px;
+  min-height: fit-content;
+  background-color: $whiteColor;
+  transform: translateX(-100%);
+  transition: all 0.3s ease 0s;
+
+  &_open {
+    transform: translateX(0%);
+  }
+
+  &__background {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    transition: all 0.3s ease 0s;
+    background-color: $bgColorModal;
+  }
+}

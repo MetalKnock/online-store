@@ -23,12 +23,15 @@ import {
 } from '../../utils/filter';
 import { Items, StateDualSliderData } from '../../types/data';
 import styles from './Main.module.scss';
+import BurgerMenu from '../../Components/BurgerMenu';
 
 function Main() {
   const dispatch = useAppDispatch();
   const { items, categories, brands, prices, stocks, isLoading } = useAppSelector(
     (state) => state.ITEMS,
   );
+
+  const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState(false);
 
   const [areFiltersInit, setAreFiltersInit] = useState(false);
 
@@ -241,6 +244,17 @@ function Main() {
 
   return (
     <main className="main">
+      <BurgerMenu
+        priceState={{ ...priceDualSliderData, onInput: onPriceDualSliderChange }}
+        stockState={{ ...stockDualSliderData, onInput: onStockDualSliderChange }}
+        categoryState={categoryFilterData}
+        onCategoryFilterChange={onCategoryFilterChange}
+        brandState={brandFilterData}
+        onBrandFilterChange={onBrandFilterChange}
+        onResetBtnClick={onResetBtnClick}
+        isOpenBurgerMenu={isOpenBurgerMenu}
+        setIsOpenBurgerMenu={setIsOpenBurgerMenu}
+      />
       <div className={`${styles.main__container} main__container`}>
         <div className={styles.main__leftPanel}>
           {!isLoading && (
@@ -265,6 +279,7 @@ function Main() {
             onSortValueChange={onSortValueChange}
             searchValue={searchValue}
             onSearchValueChange={onSearchValueChange}
+            setIsOpenBurgerMenu={setIsOpenBurgerMenu}
           />
           <ProductList
             items={sortedItems}

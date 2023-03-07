@@ -7,4 +7,20 @@
   gap: rem(10);
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+
+  &__filtersIcon {
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 900px) {
+  .topPanel {
+    &__filtersIcon {
+      display: block;
+    }
+  }
 }

@@ -13,12 +13,26 @@
 
   &__logo {
     min-height: rem(64);
-    img {
+
+    &Img {
       display: block;
       max-width: rem(200);
       max-height: rem(100);
       width: auto;
       height: auto;
+    }
+  }
+}
+
+@media (max-width: 430px) {
+  .header {
+    &__logo {
+      display: flex;
+      align-items: center;
+
+      &Img {
+        max-width: rem(160);
+      }
     }
   }
 }
