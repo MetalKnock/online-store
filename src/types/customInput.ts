@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface IValidationErrors {
+interface IValidationErrors {
   fullNameError: string;
   numberPhoneError: string;
   deliveryAddressError: string;
@@ -10,7 +10,7 @@ export interface IValidationErrors {
   cvvError: string;
 }
 
-export interface IValidations {
+interface IValidations {
   fullNameError?: boolean;
   numberPhoneError?: boolean;
   deliveryAddressError?: boolean;
@@ -20,7 +20,7 @@ export interface IValidations {
   cvvError?: boolean;
 }
 
-export interface IInputData {
+interface IInputData {
   value: string;
   isDirty: boolean;
   paymentSystem: string;
@@ -35,3 +35,5 @@ export interface IInputData {
   cvvError: boolean;
   inputValid: boolean;
 }
+
+export type { IValidationErrors, IValidations, IInputData };

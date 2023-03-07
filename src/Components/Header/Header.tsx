@@ -8,7 +8,7 @@ export default function Header() {
     <header className={`header ${styles.header}`}>
       <div className={`header__container ${styles.header__container}`}>
         <Link className={styles.header__logo} to="/">
-          <img src="/assets/img/header/logo.png" alt="logo" />
+          <img src="/assets/img/header/logo.png" alt="logo" className={styles.header__logoImg} />
         </Link>
 
         <Cart />

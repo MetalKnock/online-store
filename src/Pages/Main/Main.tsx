@@ -6,7 +6,14 @@ import loadItemsAction from '../../store/serviceActions';
 import Filters from '../../Components/Filters';
 import ProductList from '../../Components/ProductList';
 import TopPanel from '../../Components/TopPanel';
-import { CardView, QUERY_PARAM_DELIMITER, SortOptionValues, QueryParams } from '../../const/const';
+import {
+  CardView,
+  QUERY_PARAM_DELIMITER,
+  SortOptionValues,
+  QueryParams,
+  SliderType,
+  FilterType,
+} from '../../const/const';
 import {
   getSortedItems,
   filterItems,
@@ -16,12 +23,15 @@ import {
 } from '../../utils/filter';
 import { Items, StateDualSliderData } from '../../types/data';
 import styles from './Main.module.scss';
+import BurgerMenu from '../../Components/BurgerMenu';
 
 function Main() {
   const dispatch = useAppDispatch();
   const { items, categories, brands, prices, stocks, isLoading } = useAppSelector(
     (state) => state.ITEMS,
   );
+
+  const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState(false);
 
   const [areFiltersInit, setAreFiltersInit] = useState(false);
 
@@ -64,9 +74,9 @@ function Main() {
       searchValue,
     });
 
-    setPriceDualSliderData(getDualSliderDataAfterFiltering(prices, foundItems, 'price'));
+    setPriceDualSliderData(getDualSliderDataAfterFiltering(prices, foundItems, SliderType.price));
 
-    setStockDualSliderData(getDualSliderDataAfterFiltering(stocks, foundItems, 'stock'));
+    setStockDualSliderData(getDualSliderDataAfterFiltering(stocks, foundItems, SliderType.stock));
 
     setFilteredItems(foundItems);
 
@@ -108,11 +118,11 @@ function Main() {
   };
 
   const onCategoryFilterChange = (category: string, isActive: boolean) => {
-    onSelectFilterChange(category, isActive, 'category');
+    onSelectFilterChange(category, isActive, FilterType.category);
   };
 
   const onBrandFilterChange = (brand: string, isActive: boolean) => {
-    onSelectFilterChange(brand, isActive, 'brand');
+    onSelectFilterChange(brand, isActive, FilterType.brand);
   };
 
   const onViewSwitchChange = (viewMode: CardView) =>
@@ -149,9 +159,9 @@ function Main() {
   const onDualSliderChange = (
     minValue: number,
     maxValue: number,
-    sliderType: 'price' | 'stock',
+    sliderType: SliderType.price | SliderType.stock,
   ) => {
-    const dataValues = sliderType === 'price' ? prices : stocks;
+    const dataValues = sliderType === SliderType.price ? prices : stocks;
     const minDataValue = dataValues[minValue];
     const maxDataValue = dataValues[maxValue];
     setSearchParams((urlParams) => {
@@ -165,7 +175,7 @@ function Main() {
   };
 
   const onPriceDualSliderChange = (minValue: number, maxValue: number) => {
-    onDualSliderChange(minValue, maxValue, 'price');
+    onDualSliderChange(minValue, maxValue, SliderType.price);
 
     const currentPriceValues = `${prices[minValue]}${QUERY_PARAM_DELIMITER}${prices[maxValue]}`;
 
@@ -180,7 +190,7 @@ function Main() {
       searchValue,
     });
 
-    setStockDualSliderData(getDualSliderDataAfterFiltering(stocks, foundItems, 'stock'));
+    setStockDualSliderData(getDualSliderDataAfterFiltering(stocks, foundItems, SliderType.stock));
     setFilteredItems(foundItems);
     setPriceDualSliderData((prev) => ({
       ...prev,
@@ -192,7 +202,7 @@ function Main() {
   };
 
   const onStockDualSliderChange = (minValue: number, maxValue: number) => {
-    onDualSliderChange(minValue, maxValue, 'stock');
+    onDualSliderChange(minValue, maxValue, SliderType.stock);
 
     const currentStockValues = `${stocks[minValue]}${QUERY_PARAM_DELIMITER}${stocks[maxValue]}`;
 
@@ -207,7 +217,7 @@ function Main() {
       searchValue,
     });
 
-    setPriceDualSliderData(getDualSliderDataAfterFiltering(prices, foundItems, 'price'));
+    setPriceDualSliderData(getDualSliderDataAfterFiltering(prices, foundItems, SliderType.price));
     setFilteredItems(foundItems);
     setStockDualSliderData((prev) => ({
       ...prev,
@@ -234,6 +244,17 @@ function Main() {
 
   return (
     <main className="main">
+      <BurgerMenu
+        priceState={{ ...priceDualSliderData, onInput: onPriceDualSliderChange }}
+        stockState={{ ...stockDualSliderData, onInput: onStockDualSliderChange }}
+        categoryState={categoryFilterData}
+        onCategoryFilterChange={onCategoryFilterChange}
+        brandState={brandFilterData}
+        onBrandFilterChange={onBrandFilterChange}
+        onResetBtnClick={onResetBtnClick}
+        isOpenBurgerMenu={isOpenBurgerMenu}
+        setIsOpenBurgerMenu={setIsOpenBurgerMenu}
+      />
       <div className={`${styles.main__container} main__container`}>
         <div className={styles.main__leftPanel}>
           {!isLoading && (
@@ -258,6 +279,7 @@ function Main() {
             onSortValueChange={onSortValueChange}
             searchValue={searchValue}
             onSearchValueChange={onSearchValueChange}
+            setIsOpenBurgerMenu={setIsOpenBurgerMenu}
           />
           <ProductList
             items={sortedItems}

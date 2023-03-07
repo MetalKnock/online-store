@@ -10,12 +10,12 @@ import {
 } from './reducers/itemState';
 import { AppDispatch } from './rootReducer';
 import { getCategories, getBrands, getPrices, getStocks } from '../utils/data';
-import { URL } from '../const/const';
+import { API_URL } from '../const/const';
 
 const loadItemsAction = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(itemsLoading());
-    const response = await fetch(URL);
+    const response = await fetch(API_URL);
     const data: ResponseData = await response.json();
     const items = data.products.filter((product) => product.images.length >= 2);
     const categories = getCategories(items);

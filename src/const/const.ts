@@ -1,25 +1,25 @@
 import { IValidationErrors } from '../types/customInput';
-import { Promocodes } from '../types/data';
+import { PromoCodes } from '../types/data';
 
-export enum NameSpace {
+enum NameSpace {
   cart = 'CART',
   items = 'ITEMS',
   modal = 'MODAL',
 }
 
-export enum LoadingStatus {
+enum LoadingStatus {
   IDLE = 'idle',
   LOADING = 'loading',
   SUCCEEDED = 'succeeded',
   FAILED = 'failed',
 }
 
-export enum CardView {
+enum CardView {
   simple = 'SIMPLE',
   tile = 'TILE',
 }
 
-export enum SortOptionValues {
+enum SortOptionValues {
   sortTitle = 'sort-title',
   priceASC = 'price-asc',
   priceDESC = 'price-desc',
@@ -27,7 +27,7 @@ export enum SortOptionValues {
   ratingDESC = 'rating-desc',
 }
 
-export enum ValidationKeys {
+enum ValidationKeys {
   fullNameError = 'fullNameError',
   numberPhoneError = 'numberPhoneError',
   deliveryAddressError = 'deliveryAddressError',
@@ -37,19 +37,39 @@ export enum ValidationKeys {
   cvvError = 'cvvError',
 }
 
-export enum PaymentSystems {
+enum PaymentSystems {
   americanExpress = 'American Express',
   visa = 'Visa',
   mastercard = 'Mastercard',
   default = 'Default',
 }
 
-export const ListPromocodes: Promocodes[] = [
+enum QueryParams {
+  view = 'view',
+  sort = 'sort',
+  search = 'search',
+  category = 'category',
+  brand = 'brand',
+  price = 'price',
+  stock = 'stock',
+}
+
+enum SliderType {
+  price = 'price',
+  stock = 'stock',
+}
+
+enum FilterType {
+  category = 'category',
+  brand = 'brand',
+}
+
+const ListPromoCodes: PromoCodes[] = [
   { name: 'RS', discount: 0.1, fullName: 'Rolling Scopes School' },
   { name: 'EPM', discount: 0.15, fullName: 'EPAM Systems' },
 ];
 
-export const validationErrors: IValidationErrors = {
+const validationErrors: IValidationErrors = {
   fullNameError: 'The field contains at least two words, each at least 3 characters long.',
   numberPhoneError:
     'The field must start with +, contain only numbers, and be at least 9 characters long.',
@@ -61,18 +81,25 @@ export const validationErrors: IValidationErrors = {
   cvvError: 'The field length must be 3.',
 };
 
-export const URL = 'https://dummyjson.com/products?limit=100';
+const API_URL = 'https://dummyjson.com/products?limit=100';
 
-export const keyLocalStorage = 'online-store-metalknock-rz0r';
+const KEY_LOCALE_STORAGE = 'online-store-metalknock-rz0r';
 
-export const QUERY_PARAM_DELIMITER = '↕';
+const QUERY_PARAM_DELIMITER = '↕';
 
-export enum QueryParams {
-  view = 'view',
-  sort = 'sort',
-  search = 'search',
-  category = 'category',
-  brand = 'brand',
-  price = 'price',
-  stock = 'stock',
-}
+export {
+  NameSpace,
+  LoadingStatus,
+  CardView,
+  SortOptionValues,
+  ValidationKeys,
+  PaymentSystems,
+  QueryParams,
+  SliderType,
+  FilterType,
+  ListPromoCodes,
+  validationErrors,
+  API_URL,
+  KEY_LOCALE_STORAGE,
+  QUERY_PARAM_DELIMITER,
+};

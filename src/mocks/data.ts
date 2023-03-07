@@ -1,8 +1,8 @@
 import { IImagesWithSize } from '../types/imageSlider';
-import { BreadcrumbProps } from '../Components/BreadcrumbList';
+import { BreadcrumbProps } from '../Components/BreadcrumbList/BreadcrumbList';
 import { Items } from '../types/data';
 
-export const ITEMS: Items = [
+const ITEMS: Items = [
   {
     id: 1,
     title: 'iPhone 9',
@@ -1903,7 +1903,7 @@ export const ITEMS: Items = [
   },
 ];
 
-export const CATEGORIES: string[] = [
+const CATEGORIES: string[] = [
   'smartphones',
   'laptops',
   'fragrances',
@@ -1926,7 +1926,7 @@ export const CATEGORIES: string[] = [
   'lighting',
 ];
 
-export const BRANDS: string[] = [
+const BRANDS: string[] = [
   'apple',
   'samsung',
   'oppo',
@@ -2007,26 +2007,26 @@ export const BRANDS: string[] = [
   'yiosi',
 ];
 
-export const PRICES: number[] = [
+const PRICES: number[] = [
   10, 12, 13, 14, 19, 20, 23, 25, 28, 29, 30, 34, 35, 36, 40, 41, 44, 45, 46, 47, 50, 51, 55, 57,
   58, 60, 66, 68, 70, 79, 80, 90, 100, 120, 280, 499, 549, 569, 600, 700, 899, 900, 920, 930, 1050,
   1099, 1249, 1499, 1749,
 ];
 
-export const STOCKS: number[] = [
+const STOCKS: number[] = [
   2, 6, 7, 9, 13, 16, 17, 20, 21, 22, 24, 25, 26, 27, 30, 32, 34, 36, 37, 39, 42, 43, 44, 46, 47,
   50, 51, 52, 54, 55, 61, 63, 64, 65, 68, 72, 77, 78, 79, 83, 84, 88, 89, 91, 92, 94, 95, 96, 101,
   105, 106, 107, 109, 110, 111, 113, 114, 115, 122, 123, 127, 128, 129, 131, 132, 133, 136, 137,
   138, 140, 142, 144, 146, 148, 149, 150,
 ];
 
-export const BREADCRUMBS: BreadcrumbProps = {
+const BREADCRUMBS: BreadcrumbProps = {
   category: 'Smartphones',
   brand: 'Apple',
   title: 'Samsung 9',
 };
 
-export const IMAGES_WITH_SIZE: IImagesWithSize[] = [
+const IMAGES_WITH_SIZE: IImagesWithSize[] = [
   { url: 'https://i.dummyjson.com/data/products/1/1.jpg', size: '123' },
   { url: 'https://i.dummyjson.com/data/products/1/2.jpg', size: '1234' },
   { url: 'https://i.dummyjson.com/data/products/1/3.jpg', size: '123' },
@@ -2034,8 +2034,19 @@ export const IMAGES_WITH_SIZE: IImagesWithSize[] = [
   { url: 'https://i.dummyjson.com/data/products/1/5.jpg', size: '12345' },
 ];
 
-export const IMAGES_WITH_SIZE_WITHOUT_DUPLICATE: IImagesWithSize[] = [
+const IMAGES_WITH_SIZE_WITHOUT_DUPLICATE: IImagesWithSize[] = [
   { url: 'https://i.dummyjson.com/data/products/1/1.jpg', size: '123' },
   { url: 'https://i.dummyjson.com/data/products/1/2.jpg', size: '1234' },
   { url: 'https://i.dummyjson.com/data/products/1/5.jpg', size: '12345' },
 ];
+
+export {
+  ITEMS,
+  CATEGORIES,
+  BRANDS,
+  PRICES,
+  STOCKS,
+  BREADCRUMBS,
+  IMAGES_WITH_SIZE,
+  IMAGES_WITH_SIZE_WITHOUT_DUPLICATE,
+};

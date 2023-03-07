@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { NameSpace, keyLocalStorage } from '../../const/const';
-import { Item, Promocodes } from '../../types/data';
+import { NameSpace, KEY_LOCALE_STORAGE } from '../../const/const';
+import { Item, PromoCodes } from '../../types/data';
 import { CartState } from '../../types/state';
 
-const localCartState: CartState = JSON.parse(localStorage.getItem(keyLocalStorage) || 'null');
+const localCartState: CartState = JSON.parse(localStorage.getItem(KEY_LOCALE_STORAGE) || 'null');
 
 export const initialState: CartState = {
   cartItemQuantity: localCartState ? localCartState.cartItemQuantity : 0,
   totalPrice: localCartState ? localCartState.totalPrice : 0,
   cartItems: localCartState ? localCartState.cartItems : [],
-  promocodes: localCartState ? localCartState.promocodes : [],
+  promoCodes: localCartState ? localCartState.promoCodes : [],
   totalDiscount: localCartState ? localCartState.totalDiscount : 0,
   discountedTotalPrice: localCartState ? localCartState.discountedTotalPrice : 0,
 };
@@ -56,24 +56,24 @@ export const cartStateSlice = createSlice({
       state.cartItems = [];
       state.cartItemQuantity = 0;
       state.totalPrice = 0;
-      state.promocodes = [];
+      state.promoCodes = [];
       state.totalDiscount = 0;
       state.discountedTotalPrice = 0;
     },
-    addPromocode(state, action: PayloadAction<Promocodes>) {
-      if (!state.promocodes.find((promocode) => promocode.name === action.payload.name)) {
-        state.promocodes = [...state.promocodes, action.payload];
+    addPromoCode(state, action: PayloadAction<PromoCodes>) {
+      if (!state.promoCodes.find((promoCode) => promoCode.name === action.payload.name)) {
+        state.promoCodes = [...state.promoCodes, action.payload];
         const sumDiscount = parseFloat(
-          state.promocodes.reduce((sum, promocode) => sum + promocode.discount, 0).toFixed(2),
+          state.promoCodes.reduce((sum, promoCode) => sum + promoCode.discount, 0).toFixed(2),
         );
         state.totalDiscount = sumDiscount > 1 ? 1 : sumDiscount;
         state.discountedTotalPrice = Math.floor(state.totalPrice * (1 - state.totalDiscount));
       }
     },
-    removePromocode(state, action: PayloadAction<string>) {
-      state.promocodes = state.promocodes.filter((promocode) => promocode.name !== action.payload);
+    removePromoCode(state, action: PayloadAction<string>) {
+      state.promoCodes = state.promoCodes.filter((promoCode) => promoCode.name !== action.payload);
       const sumDiscount = parseFloat(
-        state.promocodes.reduce((sum, promocode) => sum + promocode.discount, 0).toFixed(2),
+        state.promoCodes.reduce((sum, promoCode) => sum + promoCode.discount, 0).toFixed(2),
       );
       state.totalDiscount = sumDiscount > 1 ? 1 : sumDiscount;
       state.discountedTotalPrice = Math.floor(state.totalPrice * (1 - state.totalDiscount));
@@ -86,7 +86,7 @@ export const {
   removeCartItem,
   dropCartItem,
   clearCart,
-  addPromocode,
-  removePromocode,
+  addPromoCode,
+  removePromoCode,
 } = cartStateSlice.actions;
 export const cartState = cartStateSlice.reducer;

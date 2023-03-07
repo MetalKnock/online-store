@@ -1,7 +1,8 @@
-import { SortOptionValues, QUERY_PARAM_DELIMITER } from '../const/const';
+import { SortOptionValues, QUERY_PARAM_DELIMITER, SliderType, FilterType } from '../const/const';
 import { FilterData, Item, Items } from '../types/data';
+import { IFilterItems } from '../types/filter';
 
-export const getSortedItems = (sortValue: SortOptionValues, items: Items) => {
+const getSortedItems = (sortValue: SortOptionValues, items: Items) => {
   switch (sortValue) {
     case SortOptionValues.priceASC:
       return items.sort((a, b) => a.price - b.price);
@@ -16,7 +17,7 @@ export const getSortedItems = (sortValue: SortOptionValues, items: Items) => {
   }
 };
 
-export const findItems = (items: Items, searchValue: string) => {
+const findItems = (items: Items, searchValue: string) => {
   if (searchValue === '') return items;
 
   return items.filter(
@@ -31,17 +32,19 @@ export const findItems = (items: Items, searchValue: string) => {
   );
 };
 
-export const filterItemsBySelectList = (
+const filterItemsBySelectList = (
   items: Items,
   filterString: string,
-  filterType: 'category' | 'brand',
+  filterType: FilterType.category | FilterType.brand,
 ): Items => {
   if (filterString === '') return items;
   const activeNames = filterString.split(QUERY_PARAM_DELIMITER);
-  return items.filter((item) => activeNames.some((it) => it === item[filterType].toLowerCase()));
+  return items.filter((item) =>
+    activeNames.some((activeName) => activeName === item[filterType].toLowerCase()),
+  );
 };
 
-export const getSelectListData = (
+const getSelectListData = (
   items: Items,
   filteredItems: Items,
   allSelectListData: string[],
@@ -53,27 +56,29 @@ export const getSelectListData = (
   return allSelectListData.map((name, idx) => ({
     id: `${name}_${idx}`,
     name,
-    isActive: activeFilters.some((it) => it === name),
-    allItems: items.filter((it) => name === it[filterType].toLowerCase()).length,
-    availableItems: filteredItems.filter((it) => name === it[filterType].toLowerCase()).length,
+    isActive: activeFilters.some((activeFilter) => activeFilter === name),
+    allItems: items.filter((item) => name === item[filterType].toLowerCase()).length,
+    availableItems: filteredItems.filter(
+      (filteredItem) => name === filteredItem[filterType].toLowerCase(),
+    ).length,
   }));
 };
 
-export const getDualSliderMinIndex = (allSliderData: number[], queryString: string) => {
+const getDualSliderMinIndex = (allSliderData: number[], queryString: string) => {
   const value = queryString.split(QUERY_PARAM_DELIMITER)[0];
   if (Number.isNaN(value)) return 0;
-  return allSliderData.findIndex((it) => it >= +value);
+  return allSliderData.findIndex((SliderData) => SliderData >= +value);
 };
 
-export const getDualSliderMaxIndex = (allSliderData: number[], queryString: string) => {
+const getDualSliderMaxIndex = (allSliderData: number[], queryString: string) => {
   const value = +queryString.split(QUERY_PARAM_DELIMITER)[1];
   if (Number.isNaN(value)) return allSliderData.length > 0 ? allSliderData.length - 1 : 0;
-  const dataValue = [...allSliderData].reverse().find((it) => it <= value);
+  const dataValue = [...allSliderData].reverse().find((sliderData) => sliderData <= value);
   if (dataValue === undefined) return -1;
-  return allSliderData.findIndex((it) => it === dataValue);
+  return allSliderData.findIndex((sliderData) => sliderData === dataValue);
 };
 
-export const getDualSliderData = (allSliderData: number[], queryString: string) => {
+const getDualSliderData = (allSliderData: number[], queryString: string) => {
   const minValue = getDualSliderMinIndex(allSliderData, queryString);
   const maxValue = getDualSliderMaxIndex(allSliderData, queryString);
 
@@ -89,10 +94,10 @@ export const getDualSliderData = (allSliderData: number[], queryString: string) 
   };
 };
 
-export const getDualSliderDataAfterFiltering = (
+const getDualSliderDataAfterFiltering = (
   allSliderData: number[],
   filteredItems: Items,
-  filterType: 'price' | 'stock',
+  filterType: SliderType.price | SliderType.stock,
 ) => {
   if (filteredItems.length === 0) {
     return {
@@ -108,9 +113,9 @@ export const getDualSliderDataAfterFiltering = (
     (a: Item, b: Item) => (a[filterType] as number) - (b[filterType] as number),
   );
 
-  const minValue = allSliderData.findIndex((it) => it === sortedItems[0][filterType]);
+  const minValue = allSliderData.findIndex((item) => item === sortedItems[0][filterType]);
   const maxValue = allSliderData.findIndex(
-    (it) => it === sortedItems[sortedItems.length - 1][filterType],
+    (item) => item === sortedItems[sortedItems.length - 1][filterType],
   );
 
   const minDataValue = allSliderData[minValue];
@@ -125,21 +130,22 @@ export const getDualSliderDataAfterFiltering = (
   };
 };
 
-export const filterItemsByDualSlider = (
+const filterItemsByDualSlider = (
   items: Items,
   allSliderData: number[],
   queryString: string,
-  sliderType: 'price' | 'stock',
+  sliderType: SliderType.price | SliderType.stock,
 ) => {
   const minValue = getDualSliderMinIndex(allSliderData, queryString);
   const maxValue = getDualSliderMaxIndex(allSliderData, queryString);
 
   return items.filter(
-    (it) => it[sliderType] >= allSliderData[minValue] && it[sliderType] <= allSliderData[maxValue],
+    (item) =>
+      item[sliderType] >= allSliderData[minValue] && item[sliderType] <= allSliderData[maxValue],
   );
 };
 
-export const filterItems = ({
+const filterItems = ({
   items,
   categoryValues,
   brandValues,
@@ -148,41 +154,43 @@ export const filterItems = ({
   stocks,
   stockValues,
   searchValue,
-}: {
-  items: Items;
-  categoryValues: string;
-  brandValues: string;
-  prices: number[];
-  priceValues: string;
-  stocks: number[];
-  stockValues: string;
-  searchValue: string;
-}) => {
+}: IFilterItems) => {
   const itemsFilteredByCategories: Items = filterItemsBySelectList(
     items,
     categoryValues,
-    'category',
+    FilterType.category,
   );
 
   const itemsFilteredByBrands: Items = filterItemsBySelectList(
     itemsFilteredByCategories,
     brandValues,
-    'brand',
+    FilterType.brand,
   );
 
   const itemsFilteredByPrice = filterItemsByDualSlider(
     itemsFilteredByBrands,
     prices,
     priceValues,
-    'price',
+    SliderType.price,
   );
 
   const itemsFilteredByStock = filterItemsByDualSlider(
     itemsFilteredByPrice,
     stocks,
     stockValues,
-    'stock',
+    SliderType.price,
   );
 
   return findItems(itemsFilteredByStock, searchValue);
+};
+
+export {
+  getSortedItems,
+  findItems,
+  filterItemsBySelectList,
+  getSelectListData,
+  getDualSliderData,
+  getDualSliderDataAfterFiltering,
+  filterItemsByDualSlider,
+  filterItems,
 };
